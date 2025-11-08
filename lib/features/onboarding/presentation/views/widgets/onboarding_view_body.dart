@@ -13,7 +13,7 @@ class OnboardingViewBody extends StatefulWidget {
 
 class _OnboardingViewBodyState extends State<OnboardingViewBody> {
   late PageController pageController;
-  int currentPage = 0; // ✅ إضافة
+  int currentPage = 0;
 
   @override
   void initState() {

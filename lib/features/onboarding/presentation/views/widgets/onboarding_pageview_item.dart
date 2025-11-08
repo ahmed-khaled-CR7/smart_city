@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
+import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
 
 class OnboardingPageviewItem extends StatelessWidget {
@@ -42,12 +43,15 @@ class OnboardingPageviewItem extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 32.sp,
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.bold32.copyWith(
               color: AppColors.secondaryColor2,
-              fontFamily: 'Cairo',
             ),
+            // TextStyle(
+            //   fontSize: 32.sp,
+            //   fontWeight: FontWeight.bold,
+            //   color: AppColors.secondaryColor2,
+            //   fontFamily: 'Cairo',
+            // ),
           ),
 
           SizedBox(height: 16.h),
@@ -57,12 +61,15 @@ class OnboardingPageviewItem extends StatelessWidget {
             child: Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16.sp,
+              style: AppTextStyles.regular16.copyWith(
                 color: const Color(0xff4E5556),
-                fontFamily: 'Cairo',
-                height: 1.6,
               ),
+              //  TextStyle(
+              //   fontSize: 16.sp,
+              //   color: const Color(0xff4E5556),
+              //   fontFamily: 'Cairo',
+              //   height: 1.6,
+              // ),
             ),
           ),
 
