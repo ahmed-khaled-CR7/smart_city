@@ -68,10 +68,10 @@ abstract class AppTextStyles {
     fontSize: 11,
   );
 
-  static const TextStyle medium15 = TextStyle(
+  static const TextStyle medium18 = TextStyle(
     fontFamily: _font,
     fontWeight: FontWeight.w500,
-    fontSize: 15,
+    fontSize: 18,
   );
 
   static const TextStyle regular26 = TextStyle(

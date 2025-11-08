@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_city/core/config/signup_fields_config.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
@@ -9,54 +10,6 @@ class SignupViewBody extends StatelessWidget {
   SignupViewBody({super.key});
 
   final _formKey = GlobalKey<FormState>();
-
-  final List<Map<String, dynamic>> fields = [
-    {
-      "title": "Email",
-      "hint": "Enter your email",
-      "icon": Icons.email,
-      "input": TextInputType.emailAddress,
-      "obscure": false,
-    },
-    {
-      "title": "Password",
-      "hint": "Enter your password",
-      "icon": Icons.lock,
-      "obscure": true,
-    },
-    {
-      "title": "Confirm Password",
-      "hint": "Re-enter your password",
-      "icon": Icons.lock,
-      "obscure": true,
-    },
-    {
-      "title": "Phone Number",
-      "hint": "Enter your phone number",
-      "icon": Icons.phone,
-      "input": TextInputType.phone,
-      "obscure": false,
-    },
-    {
-      "title": "National ID",
-      "hint": "Enter your national ID",
-      "icon": Icons.perm_identity,
-      "input": TextInputType.number,
-      "obscure": false,
-    },
-    {
-      "title": "Full Name",
-      "hint": "Enter your full name",
-      "icon": Icons.person,
-      "obscure": false,
-    },
-    {
-      "title": "Address",
-      "hint": "Enter your address",
-      "icon": Icons.home,
-      "obscure": false,
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +32,7 @@ class SignupViewBody extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
             child: Column(
               children: [
-                ...fields.map(
+                ...SignupFieldsConfig.fields.map(
                   (field) => Padding(
                     padding: EdgeInsets.only(bottom: 12.h),
                     child: CustomTextformField(
@@ -99,10 +52,37 @@ class SignupViewBody extends StatelessWidget {
                   text: 'Create Account',
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      /// connect cubit here:
+                      /// TODO:
                       /// context.read<SignupCubit>().signup();
                     }
                   },
+                ),
+
+                SizedBox(height: 18.h),
+
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Already have an account? ",
+                        style: AppTextStyles.medium18.copyWith(
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                      WidgetSpan(
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            "Log in",
+                            style: AppTextStyles.medium18.copyWith(
+                              color: AppColors.primaryColor,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
