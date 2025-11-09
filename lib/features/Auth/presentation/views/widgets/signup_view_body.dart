@@ -5,6 +5,8 @@ import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
 import 'package:smart_city/core/widgets/custom_textformfield.dart';
+import 'package:smart_city/features/Auth/presentation/views/login_view.dart';
+import 'package:smart_city/features/Auth/presentation/views/widgets/auth_dialog.dart';
 
 class SignupViewBody extends StatelessWidget {
   SignupViewBody({super.key});
@@ -24,7 +26,6 @@ class SignupViewBody extends StatelessWidget {
           style: AppTextStyles.bold20.copyWith(color: const Color(0xFF1E1E1E)),
         ),
       ),
-
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -49,11 +50,21 @@ class SignupViewBody extends StatelessWidget {
                 SizedBox(height: 28.h),
 
                 CustomButton(
+                  color: AppColors.primaryColor,
                   text: 'Create Account',
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      /// TODO:
-                      /// context.read<SignupCubit>().signup();
+                      /// TODO: Handle SignUp
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AuthDialog(
+                            Title: 'Account Created Successfully!',
+                            subTitle: 'You can log in now!',
+                          ),
+                        ),
+                      );
                     }
                   },
                 ),
@@ -71,7 +82,9 @@ class SignupViewBody extends StatelessWidget {
                       ),
                       WidgetSpan(
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, LoginView.routeName);
+                          },
                           child: Text(
                             "Log in",
                             style: AppTextStyles.medium18.copyWith(

@@ -3,10 +3,10 @@ import 'package:smart_city/features/splash/presentation/views/widgets/splash_vie
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
+  static const routeName = 'splash';
 
-  static const String routeName = 'splash';
   @override
   Widget build(BuildContext context) {
-    return SplashViewBody();
+    return const Scaffold(body: SplashViewBody());
   }
 }

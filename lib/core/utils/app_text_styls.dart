@@ -52,7 +52,7 @@ abstract class AppTextStyles {
 
   static const TextStyle bold28 = TextStyle(
     fontFamily: _font,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w700,
     fontSize: 28,
   );
 

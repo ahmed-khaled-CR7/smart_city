@@ -8,12 +8,12 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.backgroundColor,
+    this.color,
   });
 
   final String text;
   final VoidCallback onPressed;
-  final Color? backgroundColor;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CustomButton extends StatelessWidget {
         width: 384.w,
         height: 56.h,
         decoration: ShapeDecoration(
-          color: backgroundColor ?? AppColors.primaryColor,
+          color: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.r),
           ),
