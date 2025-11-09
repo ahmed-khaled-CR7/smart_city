@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 
 class CustomButton extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
@@ -9,14 +10,16 @@ class OnboardingPageviewItem extends StatelessWidget {
     super.key,
     required this.subtitle,
     required this.title,
-    required this.image,
+    required this.animation,
+    this.animationHeight,
     required this.isLastPage,
     required this.onPressed,
   });
 
   final String subtitle;
   final String title;
-  final String image;
+  final String animation;
+  final double? animationHeight;
   final bool isLastPage;
   final VoidCallback onPressed;
 
@@ -29,33 +32,23 @@ class OnboardingPageviewItem extends StatelessWidget {
         children: [
           Expanded(
             flex: 3,
-
-            child: Image.asset(
-              image,
+            child: Lottie.asset(
+              animation,
               width: double.infinity,
-              height: 350.h,
+              height:
+                  animationHeight ?? 350.h, // استخدم الحجم المخصص أو الافتراضي
               fit: BoxFit.contain,
             ),
           ),
-
           SizedBox(height: 40.h),
-
           Text(
             title,
             textAlign: TextAlign.center,
             style: AppTextStyles.bold32.copyWith(
               color: AppColors.secondaryColor2,
             ),
-            // TextStyle(
-            //   fontSize: 32.sp,
-            //   fontWeight: FontWeight.bold,
-            //   color: AppColors.secondaryColor2,
-            //   fontFamily: 'Cairo',
-            // ),
           ),
-
           SizedBox(height: 16.h),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Text(
@@ -64,25 +57,17 @@ class OnboardingPageviewItem extends StatelessWidget {
               style: AppTextStyles.regular16.copyWith(
                 color: const Color(0xff4E5556),
               ),
-              //  TextStyle(
-              //   fontSize: 16.sp,
-              //   color: const Color(0xff4E5556),
-              //   fontFamily: 'Cairo',
-              //   height: 1.6,
-              // ),
             ),
           ),
-
           SizedBox(height: 40.h),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: CustomButton(
+              color: AppColors.primaryColor,
               text: isLastPage ? 'Get Started' : 'Next',
               onPressed: onPressed,
             ),
           ),
-
           SizedBox(height: 20.h),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/services/shared_pref_singleton.dart';
-import 'package:smart_city/core/utils/app_images.dart';
 import 'package:smart_city/features/Auth/presentation/views/signup_view.dart';
 import 'package:smart_city/features/onboarding/presentation/views/widgets/onboarding_pageview_item.dart';
 
@@ -23,7 +23,8 @@ class OnboardingPageView extends StatelessWidget {
       onPageChanged: onPageChanged,
       children: [
         OnboardingPageviewItem(
-          image: Assets.imagesSplash,
+          animation: 'assets/animations/onboarding1.json',
+
           title: 'Welcome to Smart City',
           subtitle:
               'Access services, report issues\nand stay connected with your community',
@@ -35,9 +36,9 @@ class OnboardingPageView extends StatelessWidget {
             );
           },
         ),
-
         OnboardingPageviewItem(
-          image: Assets.imagesOnboarding1,
+          animation: 'assets/animations/onboardin2.json',
+
           title: 'Advanced Services',
           subtitle:
               'Enjoy smart and advanced services\nthat make your daily life easier',
@@ -49,9 +50,9 @@ class OnboardingPageView extends StatelessWidget {
             );
           },
         ),
-
         OnboardingPageviewItem(
-          image: Assets.imagesOnboarding2,
+          animation: 'assets/animations/onboarding3.json',
+
           title: 'Stay Connected',
           subtitle:
               'Report issues and stay in touch with your community easily',
