@@ -9,10 +9,12 @@ class CustomButton extends StatefulWidget {
     required this.text,
     required this.onPressed,
     this.color,
+    this.textColor,
   });
   final String text;
   final VoidCallback onPressed;
   final Color? color;
+  final Color? textColor;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -73,7 +75,7 @@ class _CustomButtonState extends State<CustomButton>
                   widget.text,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.bold18.copyWith(
-                    color: Colors.white,
+                    color: widget.textColor ?? Colors.white,
                     height: 1.50,
                     letterSpacing: 0.27,
                   ),
