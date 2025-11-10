@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:smart_city/core/config/gried_view_home_items.dart';
+import 'package:smart_city/features/notification/presentation/views/notification_view.dart';
+import 'package:smart_city/features/profile/presentation/views/profile_view.dart';
 
 class HomeGridview extends StatelessWidget {
   final Function(int) onNavTap;
 
   const HomeGridview({super.key, required this.onNavTap});
+
+  void _navigateToPage(BuildContext context, int index) {
+    switch (index) {
+      // case 0:
+      //   Navigator.pushNamed(context, UtilsView.routeName);
+      // break;
+      // case 1:
+      //   Navigator.pushNamed(context, ComplaintsView.routeName);
+      //   break;
+      case 2:
+        Navigator.pushNamed(context, NotificationView.routeName);
+        break;
+      case 3:
+        Navigator.pushNamed(context, ProfileView.routeName);
+        break;
+      default:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +42,7 @@ class HomeGridview extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = GridViewItems.gridItems[index];
         return GestureDetector(
-          onTap: () => onNavTap(index + 1),
+          onTap: () => _navigateToPage(context, index),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -40,7 +61,6 @@ class HomeGridview extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    color: item['bgColor'] as Color,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Icon(

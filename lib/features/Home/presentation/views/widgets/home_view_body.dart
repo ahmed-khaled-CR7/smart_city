@@ -1,6 +1,8 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/bottom_nav_bar.dart';
+import 'package:smart_city/core/widgets/custom_appbar.dart';
 import 'package:smart_city/features/Home/presentation/views/widgets/home_gridView.dart';
 
 class HomeViewBody extends StatefulWidget {
@@ -29,6 +31,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppbar(
+        backgroundColor: AppColors.secondaryColor2,
+        title: 'Smart City',
+
+        icon: Icons.home_filled,
+        color: Colors.white,
+      ),
       extendBody: true,
       body: PageView(
         controller: _pageController,
@@ -49,7 +58,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(child: HomeGridview(onNavTap: _onNavTap)),
+            const SizedBox(height: 24),
+
+            HomeGridview(onNavTap: _onNavTap),
             const SizedBox(height: 100),
           ],
         ),

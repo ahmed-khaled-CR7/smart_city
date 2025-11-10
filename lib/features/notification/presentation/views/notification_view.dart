@@ -3,7 +3,7 @@ import 'package:smart_city/features/notification/presentation/views/widget/notif
 
 class NotificationView extends StatelessWidget {
   const NotificationView({super.key});
-
+  static const routeName = 'NotificationView';
   @override
   Widget build(BuildContext context) {
     return NotificationViewBody();
