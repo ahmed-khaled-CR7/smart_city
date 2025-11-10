@@ -3,12 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
-import 'package:smart_city/features/profile/presentation/views/profile_view.dart';
-import 'custom_right_check.dart';
 
-class AuthDialog extends StatelessWidget {
-  const AuthDialog({super.key, required this.Title, required this.subTitle});
-  final String Title;
+class LogoutDialog extends StatelessWidget {
+  const LogoutDialog({super.key, required this.title, required this.subTitle});
+  final String title;
   final String subTitle;
   @override
   Widget build(BuildContext context) {
@@ -24,37 +22,49 @@ class AuthDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CustomRightCheck(),
-
+               Container(
+                width: 96.w,
+                height: 96.h,
+                decoration: ShapeDecoration(
+                  color: AppColors.lightprimaryColor,
+                  shape: const CircleBorder(),
+                ),
+                child: Center(
+                  child: Icon(Icons.logout, color: AppColors.primaryColor, size: 42.sp),
+                ),
+              ),
               SizedBox(height: 18.h),
-
               Text(
-                Title,
+                title,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bold28.copyWith(
                   color: AppColors.secondaryColor2,
                   height: 1.25,
                 ),
               ),
-
               SizedBox(height: 8.h),
-
               Text(
                 subTitle,
-
                 textAlign: TextAlign.center,
                 style: AppTextStyles.regular16.copyWith(
                   color: const Color(0xFF1E1E1E),
                 ),
               ),
-
               SizedBox(height: 22.h),
-
               CustomButton(
                 color: AppColors.primaryColor,
-                text: 'Go to my profile',
+                text: 'yes, logout',
                 onPressed: () {
-                  Navigator.pushNamed(context, ProfileView.routeName);
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(height: 12.h),
+              CustomButton(
+                color: Colors.white70,
+                text: 'Cancel',
+                textColor: Colors.black,
+                onPressed: () {
+                  Navigator.pop(context);
                 },
               ),
             ],
