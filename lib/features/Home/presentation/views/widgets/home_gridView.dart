@@ -39,7 +39,7 @@ class HomeGridview extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             final pageIndex = _mapGridIndexToPageIndex(index);
-            onNavTap(pageIndex); // → التنقل الصحيح
+            onNavTap(pageIndex);
           },
           child: Container(
             decoration: BoxDecoration(

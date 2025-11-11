@@ -22,13 +22,13 @@ class CustomBottomNavBar extends StatelessWidget {
       shadowElevation: 5,
       kBottomRadius: 24.0,
       notchColor: AppColors.secondaryColor2,
-      elevation: 8,
+      elevation: 10,
       showShadow: true,
       durationInMilliSeconds: 300,
       itemLabelStyle: const TextStyle(fontSize: 10),
       bottomBarItems: _buildBottomBarItems(),
       onTap: onTap,
-      kIconSize: 28.0,
+      kIconSize: 34.0,
     );
   }
 
@@ -54,6 +54,17 @@ class CustomBottomNavBar extends StatelessWidget {
           color: Colors.white,
         ),
         itemLabel: 'Notifications',
+      ),
+      BottomBarItem(
+        inActiveItem: Icon(
+          Icons.report_problem_rounded,
+          color: Colors.grey.shade600,
+        ),
+        activeItem: const Icon(
+          Icons.report_problem_rounded,
+          color: Colors.white,
+        ),
+        itemLabel: 'complaints',
       ),
       BottomBarItem(
         inActiveItem: Icon(
