@@ -12,9 +12,11 @@ class WaterDashboardView extends StatelessWidget {
     return const Scaffold(
       backgroundColor: AppColors.lightprimaryColor,
       appBar: CustomAppbar(
+        backgroundColor: AppColors.secondaryColor2,
         title: 'Water Dashboard',
         icon: Icons.water_drop,
-        color: AppColors.secondaryColor2,
+
+        color: Colors.white,
       ),
       body: WaterDashboardBody(),
     );

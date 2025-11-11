@@ -12,9 +12,10 @@ class ElectricityDashboardView extends StatelessWidget {
     return const Scaffold(
       backgroundColor: AppColors.lightprimaryColor,
       appBar: CustomAppbar(
+        backgroundColor: AppColors.secondaryColor2,
         title: 'Electricity Dashboard',
         icon: Icons.electrical_services,
-        color: AppColors.secondaryColor2,
+        color: Colors.white,
       ),
       body: ElectricityDashboardBody(),
     );

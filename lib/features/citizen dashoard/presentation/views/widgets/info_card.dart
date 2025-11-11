@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smart_city/core/utils/app_colors.dart';
+import 'package:smart_city/core/widgets/custom_button.dart';
+import 'package:smart_city/features/bills/presentation/views/bills_view.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({super.key});
@@ -40,19 +43,12 @@ class InfoCard extends StatelessWidget {
           _infoRow('Bill amount', '230 EGP'),
           _infoRow('Status', 'Unpaid', color: Colors.red),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.amber[700],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              minimumSize: const Size(double.infinity, 48),
-            ),
-            child: const Text(
-              'Pay Now',
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
+          CustomButton(
+            color: AppColors.primaryColor,
+            text: 'pay now',
+            onPressed: () {
+              Navigator.pushNamed(context, BillsView.routeName);
+            },
           ),
         ],
       ),

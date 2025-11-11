@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/custom_appbar.dart';
 import 'package:smart_city/features/citizen%20dashoard/presentation/views/electricty_dashboard_view.dart';
 import 'package:smart_city/features/citizen%20dashoard/presentation/views/water_dashboard_view.dart';
@@ -13,14 +16,17 @@ class CitizenDashboardViewBody extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xfff9f8f4),
       appBar: const CustomAppbar(
+        backgroundColor: AppColors.secondaryColor2,
         title: 'Your Dashboards',
         icon: Icons.dashboard,
-        color: Colors.blueAccent,
+        color: Colors.white,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            const SizedBox(height: 10),
             DashboardItem(
               title: 'Electricity Dashboard',
               icon: Icons.electrical_services,
