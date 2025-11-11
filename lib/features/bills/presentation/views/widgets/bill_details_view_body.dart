@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
 import 'package:smart_city/features/complaints/presentation/views/complaints_view.dart';
+import 'package:smart_city/features/payment/presentation/views/payment_method_view.dart';
 import 'package:smart_city/features/payment/presentation/views/widgets/label_value_row.dart';
 
 class BillDetailsViewBody extends StatelessWidget {
@@ -62,12 +63,7 @@ class BillDetailsViewBody extends StatelessWidget {
                     color: AppColors.primaryColor,
                     textColor: Colors.black,
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Redirecting to payment...'),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
+                      Navigator.pushNamed(context, PaymentMethodView.routeName);
                     },
                   ),
                   SizedBox(height: 15.h),
