@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/config/signup_fields_config.dart';
 import 'package:smart_city/core/widgets/custom_textformfield.dart';
-import 'package:smart_city/features/Auth/presentation/cubit/cubit/sign_up_cubit.dart';
+import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_up_cubit.dart';
 
 class SignupFieldsWidget extends StatelessWidget {
   final SignupFieldsConfig fieldsConfig;

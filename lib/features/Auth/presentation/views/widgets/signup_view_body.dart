@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,10 +6,10 @@ import 'package:smart_city/core/config/signup_fields_config.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
+import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_up_cubit.dart';
 import 'package:smart_city/features/Auth/presentation/views/login_view.dart';
 import 'package:smart_city/features/Auth/presentation/views/widgets/Custom_ScaffoldMessenger.dart';
 import 'package:smart_city/features/Auth/presentation/views/widgets/auth_dialog.dart';
-import 'package:smart_city/features/Auth/presentation/cubit/cubit/sign_up_cubit.dart';
 import 'signup_fields_widget.dart';
 
 class SignupViewBody extends StatelessWidget {
@@ -17,6 +18,7 @@ class SignupViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<SignUpCubit>();
+
     final fieldsConfig = SignupFieldsConfig(
       emailController: cubit.emailController,
       passwordController: cubit.passwordController,
@@ -41,13 +43,16 @@ class SignupViewBody extends StatelessWidget {
                 children: [
                   SignupFieldsWidget(fieldsConfig: fieldsConfig, cubit: cubit),
                   SizedBox(height: 28.h),
+
+                  // BUTTON
                   state is SignUpLoading
                       ? const CircularProgressIndicator()
                       : CustomButton(
                         color: AppColors.primaryColor,
                         text: 'Create Account',
-                        onPressed: cubit.signUp,
+                        onPressed: () => cubit.signUp(),
                       ),
+
                   SizedBox(height: 18.h),
                   _loginText(context),
                 ],
@@ -77,9 +82,9 @@ class SignupViewBody extends StatelessWidget {
         context: context,
         barrierDismissible: false,
         builder:
-            (_) => const AuthDialog(
-              Title: 'Account Created Successfully!',
+            (context) => const AuthDialog(
               subTitle: 'You can log in now!',
+              Title: 'Account Created Successfully!',
             ),
       );
     } else if (state is SignUpFailure) {
@@ -90,24 +95,20 @@ class SignupViewBody extends StatelessWidget {
   Widget _loginText(BuildContext context) {
     return RichText(
       text: TextSpan(
+        style: AppTextStyles.medium18.copyWith(color: AppColors.secondaryColor),
         children: [
+          const TextSpan(text: 'Already have an account? '),
           TextSpan(
-            text: "Already have an account? ",
+            text: 'Log in',
             style: AppTextStyles.medium18.copyWith(
-              color: AppColors.secondaryColor,
+              color: AppColors.primaryColor,
+              decoration: TextDecoration.underline,
             ),
-          ),
-          WidgetSpan(
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, LoginView.routeName),
-              child: Text(
-                "Log in",
-                style: AppTextStyles.medium18.copyWith(
-                  color: AppColors.primaryColor,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.pushNamed(context, LoginView.routeName);
+                  },
           ),
         ],
       ),

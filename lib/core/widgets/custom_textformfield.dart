@@ -1,5 +1,3 @@
-// lib/core/widgets/custom_textformfield.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -44,11 +42,10 @@ class CustomTextformField extends StatelessWidget {
             ),
           ),
 
-        // TextFormField
         TextFormField(
           controller: controller,
           keyboardType: inputType,
-          obscureText: isObscure, // ← هنا الحل!
+          obscureText: isObscure,
           obscuringCharacter: '●',
           style: TextStyle(color: const Color(0xff5C5C5C), fontSize: 14.sp),
           onChanged: onChanged,

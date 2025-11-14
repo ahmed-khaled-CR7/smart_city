@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
-import 'package:smart_city/features/Auth/presentation/cubit/cubit/sign_in_cubit.dart';
+import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_in_cubit.dart';
 import 'package:smart_city/features/Auth/presentation/views/widgets/Custom_ScaffoldMessenger.dart';
 import '../widgets/login_logo.dart';
 import '../widgets/login_title.dart';
