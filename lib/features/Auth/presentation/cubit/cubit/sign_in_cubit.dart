@@ -8,36 +8,59 @@ part 'sign_in_state.dart';
 class SignInCubit extends Cubit<SignInState> {
   final AuthRepository authRepository;
 
-  SignInCubit({required this.authRepository}) : super(SignInInitial());
+  SignInCubit({required this.authRepository}) : super(SignInInitial()) {
+    debugPrint("SignInCubit created");
+  }
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   final TextEditingController nationalIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // ↓↓↓ التعديل هنا
   UserEntity? user;
 
   Future<void> signIn() async {
-    if (!formKey.currentState!.validate()) return;
+    debugPrint("signIn called");
+    final form = formKey.currentState;
+    if (form == null) {
+      debugPrint("Form state is null");
+      return;
+    }
+
+    if (!form.validate()) {
+      debugPrint("Form validation failed");
+      return;
+    }
 
     emit(SignInLoading());
+    debugPrint("SignInLoading emitted");
 
-    final result = await authRepository.signIn(
-      nationalId: nationalIdController.text.trim(),
-      password: passwordController.text.trim(),
-    );
+    try {
+      final result = await authRepository.signIn(
+        nationalId: nationalIdController.text.trim(),
+        password: passwordController.text.trim(),
+      );
 
-    result.fold((error) => emit(SignInFailure(errMessage: error)), (
-      userEntity,
-    ) {
-      user = userEntity; // ✔️ الآن النوع متطابق UserEntity → UserEntity?
-      emit(SignInSuccess());
-    });
+      result.fold(
+        (error) {
+          debugPrint("SignInFailure: $error");
+          emit(SignInFailure(errMessage: error));
+        },
+        (userEntity) {
+          user = userEntity;
+          debugPrint("SignInSuccess: user = $userEntity");
+          emit(SignInSuccess());
+        },
+      );
+    } catch (e, stack) {
+      debugPrint("Exception in signIn: $e");
+      debugPrintStack(stackTrace: stack);
+      emit(SignInFailure(errMessage: e.toString()));
+    }
   }
 
   @override
   Future<void> close() {
+    debugPrint("SignInCubit disposed");
     nationalIdController.dispose();
     passwordController.dispose();
     return super.close();

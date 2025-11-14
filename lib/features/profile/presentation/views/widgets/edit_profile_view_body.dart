@@ -39,31 +39,36 @@ class EditProfileViewBody extends StatelessWidget {
                   CustomTextformField(
                     title: 'Full Name',
                     hintText: 'Enter full name',
-                    inputType:  TextInputType.text,
+                    inputType: TextInputType.text,
+                    isObscure: false,
                   ),
                   SizedBox(height: 16.h),
-                 CustomTextformField(
+                  CustomTextformField(
                     title: 'City',
                     hintText: 'Enter city',
-                    inputType:  TextInputType.text,
+                    inputType: TextInputType.text,
+                    isObscure: false,
                   ),
                   SizedBox(height: 16.h),
                   CustomTextformField(
                     title: 'Phone Number',
                     hintText: 'Enter phone number',
-                    inputType:  TextInputType.phone,
+                    inputType: TextInputType.phone,
+                    isObscure: false,
                   ),
                   SizedBox(height: 16.h),
                   CustomTextformField(
                     title: 'Email',
                     hintText: 'Enter email',
-                    inputType:  TextInputType.emailAddress,
+                    inputType: TextInputType.emailAddress,
+                    isObscure: false,
                   ),
                   SizedBox(height: 16.h),
                   CustomTextformField(
                     title: 'Address',
                     hintText: 'Enter address',
-                    inputType:  TextInputType.text,
+                    inputType: TextInputType.text,
+                    isObscure: false,
                   ),
                   SizedBox(height: 30.h),
                   CustomButton(

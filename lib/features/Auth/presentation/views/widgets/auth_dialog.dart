@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
+import 'package:smart_city/features/Auth/presentation/views/login_view.dart';
 import 'package:smart_city/features/profile/presentation/views/profile_view.dart';
 import 'custom_right_check.dart';
 
@@ -52,9 +53,9 @@ class AuthDialog extends StatelessWidget {
 
               CustomButton(
                 color: AppColors.primaryColor,
-                text: 'Go to my profile',
+                text: 'login',
                 onPressed: () {
-                  Navigator.pushNamed(context, ProfileView.routeName);
+                  Navigator.pushNamed(context, LoginView.routeName);
                 },
               ),
             ],
