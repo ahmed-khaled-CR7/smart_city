@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_city/core/helper/secure_storage_helper.dart';
 import 'package:smart_city/core/services/shared_pref_singleton.dart';
 import 'package:smart_city/features/Auth/presentation/views/signup_view.dart';
 import 'package:smart_city/features/onboarding/presentation/views/onboarding_view.dart';
@@ -75,21 +76,21 @@ class _SplashViewBodyState extends State<SplashViewBody>
     super.dispose();
   }
 
-  void _navigateNext() {
-    bool isOnboardingSeen = Prefs.getBool('isonBoardingSeen') ?? false;
-    bool isLoggedIn = Prefs.getBool('isLoggedIn') ?? false;
+  void _navigateNext() async {
+    final isOnboardingSeen = Prefs.getBool('isOnboardingSeen') ?? false;
 
-    Future.delayed(const Duration(milliseconds: 3000), () {
-      if (!mounted) return;
+    await Future.delayed(const Duration(seconds: 3));
 
-      if (isLoggedIn) {
-        Navigator.pushReplacementNamed(context, '/main');
-      } else if (!isOnboardingSeen) {
-        Navigator.pushReplacementNamed(context, OnboardingView.routeName);
-      } else {
-        Navigator.pushReplacementNamed(context, SignupView.routeName);
-      }
-    });
+    if (!mounted) return;
+
+    final token = await SecureStorageHelper.getToken();
+    if (token != null && token.isNotEmpty) {
+      Navigator.pushReplacementNamed(context, '/main');
+    } else if (!isOnboardingSeen) {
+      Navigator.pushReplacementNamed(context, OnboardingView.routeName);
+    } else {
+      Navigator.pushReplacementNamed(context, SignupView.routeName);
+    }
   }
 
   @override
