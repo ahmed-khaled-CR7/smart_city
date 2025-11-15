@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_city/core/helper/secure_storage_helper.dart'; // ← صح
+import 'package:smart_city/core/helper/secure_storage_helper.dart';
 import 'package:smart_city/core/entities/user_entity.dart';
 import 'package:smart_city/features/Auth/domain/repos/auth_repo.dart';
 
@@ -18,34 +18,29 @@ class SignInCubit extends Cubit<SignInState> {
   final TextEditingController passwordController = TextEditingController();
 
   UserEntity? user;
-
   Future<void> signIn() async {
     if (!formKey.currentState!.validate()) return;
 
     emit(SignInLoading());
 
-    try {
-      final result = await authRepository.signIn(
-        nationalId: nationalIdController.text.trim(),
-        password: passwordController.text.trim(),
-      );
+    final result = await authRepository.signIn(
+      nationalId: nationalIdController.text.trim(),
+      password: passwordController.text.trim(),
+    );
 
-      result.fold((error) => emit(SignInFailure(errMessage: error)), (
-        userEntity,
-      ) async {
+    result.fold(
+      (error) {
+        emit(SignInFailure(errMessage: error));
+      },
+      (userEntity) async {
         user = userEntity;
-
         final token = userEntity.token;
         if (token != null && token.isNotEmpty) {
-          await SecureStorageHelper.saveToken(token); // نفسه
+          await SecureStorageHelper.saveToken(token);
         }
-
         emit(SignInSuccess());
-      });
-    } catch (e, stack) {
-      debugPrintStack(stackTrace: stack);
-      emit(SignInFailure(errMessage: "Unexpected error"));
-    }
+      },
+    );
   }
 
   @override

@@ -1,10 +1,10 @@
+// lib/features/profile/presentation/views/widgets/profile_view_body.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
 import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
-import 'package:smart_city/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:smart_city/features/profile/presentation/views/widgets/logout_dialog.dart';
 import 'package:smart_city/features/profile/presentation/views/widgets/profile_header.dart';
 import 'package:smart_city/features/profile/presentation/views/widgets/profile_avatar.dart';
@@ -50,7 +50,7 @@ class ProfileViewBody extends StatelessWidget {
                         return const Center(child: CircularProgressIndicator());
                       }
                       if (state is ProfileSuccess) {
-                        return ProfileInfoCard();
+                        return const ProfileInfoCard();
                       }
                       if (state is ProfileFailure) {
                         return Text(
@@ -63,14 +63,7 @@ class ProfileViewBody extends StatelessWidget {
                   ),
 
                   SizedBox(height: 30.h),
-                  CustomButton(
-                    color: AppColors.secondaryColor,
-                    text: 'Edit Profile',
-                    onPressed: () {
-                      Navigator.pushNamed(context, EditProfileView.routeName);
-                    },
-                  ),
-                  SizedBox(height: 16.h),
+
                   CustomButton(
                     color: AppColors.primaryColor,
                     text: 'Log Out',
@@ -79,9 +72,12 @@ class ProfileViewBody extends StatelessWidget {
                         context: context,
                         barrierDismissible: false,
                         builder:
-                            (_) => const LogoutDialog(
+                            (_) => LogoutDialog(
                               title: 'Are you sure you want to log out?',
                               subTitle: 'You can log in again at any time',
+                              onConfirm: () {
+                                context.read<ProfileCubit>().logout(context);
+                              },
                             ),
                       );
                     },

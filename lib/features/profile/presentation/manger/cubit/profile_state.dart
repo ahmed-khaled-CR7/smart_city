@@ -1,5 +1,4 @@
 // lib/features/profile/presentation/cubit/profile_state.dart
-
 part of 'profile_cubit.dart';
 
 @immutable
@@ -15,15 +14,13 @@ final class ProfileLoading extends ProfileState {}
 final class ProfileSuccess extends ProfileState {
   final UserEntity user;
   ProfileSuccess(this.user);
-
   @override
-  String toString() => 'ProfileSuccess(user: ${user.name})';
+  String toString() => 'ProfileSuccess(${user.name})';
 }
 
 final class ProfileFailure extends ProfileState {
   final String message;
   ProfileFailure(this.message);
-
   @override
-  String toString() => 'ProfileFailure(message: $message)';
+  String toString() => 'ProfileFailure($message)';
 }

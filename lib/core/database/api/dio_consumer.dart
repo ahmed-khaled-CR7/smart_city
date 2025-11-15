@@ -16,7 +16,6 @@ class DioConsumer extends ApiConsumer {
       ..connectTimeout = const Duration(seconds: 30)
       ..receiveTimeout = const Duration(seconds: 30);
 
-    // Interceptor لإضافة الـ Token
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -41,7 +40,6 @@ class DioConsumer extends ApiConsumer {
       ),
     );
 
-    // Log كل الطلبات
     dio.interceptors.add(
       LogInterceptor(
         request: true,
@@ -109,10 +107,17 @@ class DioConsumer extends ApiConsumer {
         options: Options(
           extra: {'requireAuth': requireAuth ?? false},
           headers: headers,
+          validateStatus: (status) {
+            // لا ترمي exception عند 400 أو 401
+            return status != null && status < 500;
+          },
         ),
       );
       return _toMap(response.data);
     } on DioException catch (e) {
+      if (e.response?.statusCode == 400 || e.response?.statusCode == 401) {
+        return _toMap(e.response?.data);
+      }
       _handleDioException(e);
     }
   }

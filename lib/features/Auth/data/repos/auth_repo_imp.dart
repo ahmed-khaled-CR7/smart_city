@@ -23,7 +23,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final response = await api.post(
         EndPoints.login,
         data: {"nationalId": nationalId, "password": password},
-        requireAuth: false, // لا token مطلوب
+        requireAuth: false,
       );
 
       final status = (response['status'] as String?)?.toLowerCase();
@@ -44,7 +44,6 @@ class AuthRepositoryImpl implements AuthRepository {
         user: UserModel.fromJson(userJson),
       );
 
-      // احفظ الـ token في SecureStorage فقط
       await SecureStorageHelper.saveToken(signInData.token);
 
       return Right(signInData.user.toEntity());

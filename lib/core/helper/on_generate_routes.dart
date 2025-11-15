@@ -13,7 +13,6 @@ import 'package:smart_city/features/notification/presentation/views/notification
 import 'package:smart_city/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:smart_city/features/payment/presentation/views/payment_confirmation_view.dart';
 import 'package:smart_city/features/payment/presentation/views/payment_method_view.dart';
-import 'package:smart_city/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:smart_city/features/profile/presentation/views/profile_view.dart';
 import 'package:smart_city/features/splash/presentation/views/splash_view.dart';
 
@@ -33,9 +32,6 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
 
     case ProfileView.routeName:
       return MaterialPageRoute(builder: (_) => const ProfileView());
-
-    case EditProfileView.routeName:
-      return MaterialPageRoute(builder: (_) => const EditProfileView());
 
     case PaymentMethodView.routeName:
       return MaterialPageRoute(builder: (_) => const PaymentMethodView());
