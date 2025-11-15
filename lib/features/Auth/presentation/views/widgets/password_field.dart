@@ -5,7 +5,7 @@ import 'package:smart_city/core/widgets/custom_textformfield.dart';
 class PasswordField extends StatelessWidget {
   final TextEditingController controller;
 
-  const PasswordField({required this.controller, Key? key}) : super(key: key);
+  const PasswordField({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {

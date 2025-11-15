@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/custom_appbar.dart';

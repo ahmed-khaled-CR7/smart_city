@@ -9,8 +9,8 @@ class ConfirmPasswordField extends StatelessWidget {
   const ConfirmPasswordField({
     required this.controller,
     required this.passwordController,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

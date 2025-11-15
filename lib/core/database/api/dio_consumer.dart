@@ -1,84 +1,97 @@
-// lib/core/database/api/dio_consumer.dart
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 import 'package:smart_city/core/database/api/api_consumer.dart';
 import 'package:smart_city/core/database/api/end_ponits.dart';
 import 'package:smart_city/core/errors/error_model.dart';
 import 'package:smart_city/core/errors/expentions.dart';
-import 'package:smart_city/core/utils/app_strings.dart';
+import 'package:smart_city/core/helper/secure_storage_helper.dart';
 
 class DioConsumer extends ApiConsumer {
   final Dio dio;
-  final SharedPreferences prefs;
 
-  DioConsumer({required this.dio, required this.prefs}) {
+  DioConsumer({required this.dio}) {
     dio.options
       ..baseUrl = EndPoints.baseUrl
       ..connectTimeout = const Duration(seconds: 30)
       ..receiveTimeout = const Duration(seconds: 30);
 
+    // Interceptor لإضافة الـ Token
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          if (options.extra['requireAuth'] != false) {
-            final token = prefs.getString(AppStrings.token);
-            if (token != null) {
+          final requireAuth = options.extra['requireAuth'] as bool? ?? false;
+          if (requireAuth) {
+            final token = await SecureStorageHelper.getToken();
+            if (token != null && token.trim().isNotEmpty) {
               options.headers['Authorization'] = 'Bearer $token';
+              debugPrint('Token Sent: Bearer ${token.substring(0, 10)}...');
+            } else {
+              debugPrint('No token found for: ${options.path}');
             }
+          } else {
+            debugPrint('Public request (no auth): ${options.path}');
           }
           handler.next(options);
         },
+        onError: (e, handler) {
+          debugPrint('Dio Error: ${e.message}');
+          handler.next(e);
+        },
+      ),
+    );
+
+    // Log كل الطلبات
+    dio.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+        responseBody: true,
+        error: true,
       ),
     );
   }
 
-  // ────────────────────── HELPER: Convert to Map ──────────────────────
   Map<String, dynamic> _toMap(dynamic data) {
     if (data is Map<String, dynamic>) return data;
-    if (data is String) {
-      try {
-        return Map<String, dynamic>.from(jsonDecode(data));
-      } catch (_) {
-        return {'message': data};
-      }
-    }
-    return {'data': data};
+    if (data is String && data.isNotEmpty) return jsonDecode(data);
+    return {};
   }
 
-  // ────────────────────── HANDLE DIO EXCEPTION ──────────────────────
-  Never handleDioException(DioException e) {
-    final data = e.response?.data;
-    final map = _toMap(data);
+  Never _handleDioException(DioException e) {
+    final map = _toMap(e.response?.data);
+    final errorModel = ErrorModel(
+      errorMessage: map['message'] ?? e.message ?? 'Unknown error',
+      statusCode: e.response?.statusCode,
+      errors: map['errors'],
+    );
+    throw ServerException(errorModel);
+  }
 
-    // إذا كان statusCode >= 400
-    if (e.response?.statusCode != null && e.response!.statusCode! >= 400) {
-      throw ServerException(ErrorModel.fromJson(map));
-    }
-
-    // إذا كان 200 لكن status: error
-    if (map['status']?.toString().toLowerCase() == 'error') {
-      throw ServerException(ErrorModel.fromJson(map));
-    }
-
-    // Connection reset by peer
-    if (e.type == DioExceptionType.connectionError ||
-        e.message?.contains('reset by peer') == true ||
-        e.message?.contains('SocketException') == true) {
-      throw ServerException(
-        ErrorModel(
-          errorMessage:
-              'فشل الاتصال بالخادم. تحقق من الإنترنت أو عنوان الخادم.',
+  @override
+  Future<Map<String, dynamic>> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Map<String, String>? headers,
+    bool? requireAuth,
+  }) async {
+    try {
+      final response = await dio.get(
+        path,
+        queryParameters: queryParameters,
+        options: Options(
+          extra: {'requireAuth': requireAuth ?? false},
+          headers: headers,
         ),
       );
+      return _toMap(response.data);
+    } on DioException catch (e) {
+      _handleDioException(e);
     }
-
-    throw ServerException(
-      ErrorModel(errorMessage: e.message ?? 'حدث خطأ غير متوقع'),
-    );
   }
 
-  // ────────────────────── POST ──────────────────────
   @override
   Future<Map<String, dynamic>> post(
     String path, {
@@ -86,7 +99,7 @@ class DioConsumer extends ApiConsumer {
     Map<String, dynamic>? queryParameters,
     Map<String, String>? headers,
     bool isFormData = false,
-    bool requireAuth = true,
+    bool? requireAuth,
   }) async {
     try {
       final response = await dio.post(
@@ -94,44 +107,16 @@ class DioConsumer extends ApiConsumer {
         data: isFormData ? FormData.fromMap(data) : data,
         queryParameters: queryParameters,
         options: Options(
-          extra: {'requireAuth': requireAuth},
+          extra: {'requireAuth': requireAuth ?? false},
           headers: headers,
-          sendTimeout: const Duration(seconds: 30),
-          receiveTimeout: const Duration(seconds: 30),
         ),
       );
       return _toMap(response.data);
     } on DioException catch (e) {
-      handleDioException(e);
+      _handleDioException(e);
     }
   }
 
-  // ────────────────────── GET ──────────────────────
-  @override
-  Future<Map<String, dynamic>> get(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-    Map<String, String>? headers,
-    bool requireAuth = true,
-  }) async {
-    try {
-      final response = await dio.get(
-        path,
-        queryParameters: queryParameters,
-        options: Options(
-          extra: {'requireAuth': requireAuth},
-          headers: headers,
-          sendTimeout: const Duration(seconds: 30),
-          receiveTimeout: const Duration(seconds: 30),
-        ),
-      );
-      return _toMap(response.data);
-    } on DioException catch (e) {
-      handleDioException(e);
-    }
-  }
-
-  // ────────────────────── PUT ──────────────────────
   @override
   Future<Map<String, dynamic>> put(
     String path, {
@@ -139,7 +124,7 @@ class DioConsumer extends ApiConsumer {
     Map<String, dynamic>? queryParameters,
     Map<String, String>? headers,
     bool isFormData = false,
-    bool requireAuth = true,
+    bool? requireAuth,
   }) async {
     try {
       final response = await dio.put(
@@ -147,40 +132,35 @@ class DioConsumer extends ApiConsumer {
         data: isFormData ? FormData.fromMap(data) : data,
         queryParameters: queryParameters,
         options: Options(
-          extra: {'requireAuth': requireAuth},
+          extra: {'requireAuth': requireAuth ?? false},
           headers: headers,
-          sendTimeout: const Duration(seconds: 30),
-          receiveTimeout: const Duration(seconds: 30),
         ),
       );
       return _toMap(response.data);
     } on DioException catch (e) {
-      handleDioException(e);
+      _handleDioException(e);
     }
   }
 
-  // ────────────────────── DELETE ──────────────────────
   @override
   Future<Map<String, dynamic>> delete(
     String path, {
     Map<String, dynamic>? queryParameters,
     Map<String, String>? headers,
-    bool requireAuth = true,
+    bool? requireAuth,
   }) async {
     try {
       final response = await dio.delete(
         path,
         queryParameters: queryParameters,
         options: Options(
-          extra: {'requireAuth': requireAuth},
+          extra: {'requireAuth': requireAuth ?? false},
           headers: headers,
-          sendTimeout: const Duration(seconds: 30),
-          receiveTimeout: const Duration(seconds: 30),
         ),
       );
       return _toMap(response.data);
     } on DioException catch (e) {
-      handleDioException(e);
+      _handleDioException(e);
     }
   }
 }

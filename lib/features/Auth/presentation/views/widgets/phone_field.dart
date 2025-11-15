@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PhoneField extends StatelessWidget {
   final TextEditingController controller;
-  const PhoneField({required this.controller, Key? key}) : super(key: key);
+  const PhoneField({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {

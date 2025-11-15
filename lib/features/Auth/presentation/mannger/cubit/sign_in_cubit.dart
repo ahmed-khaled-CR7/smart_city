@@ -1,6 +1,9 @@
+// lib/features/Auth/presentation/cubit/sign_in_cubit.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_city/features/Auth/domain/entities/user_entity.dart';
+import 'package:smart_city/core/helper/secure_storage_helper.dart'; // ← صح
+import 'package:smart_city/core/entities/user_entity.dart';
 import 'package:smart_city/features/Auth/domain/repos/auth_repo.dart';
 
 part 'sign_in_state.dart';
@@ -8,9 +11,7 @@ part 'sign_in_state.dart';
 class SignInCubit extends Cubit<SignInState> {
   final AuthRepository authRepository;
 
-  SignInCubit({required this.authRepository}) : super(SignInInitial()) {
-    debugPrint("SignInCubit created");
-  }
+  SignInCubit({required this.authRepository}) : super(SignInInitial());
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nationalIdController = TextEditingController();
@@ -19,20 +20,9 @@ class SignInCubit extends Cubit<SignInState> {
   UserEntity? user;
 
   Future<void> signIn() async {
-    debugPrint("signIn called");
-    final form = formKey.currentState;
-    if (form == null) {
-      debugPrint("Form state is null");
-      return;
-    }
-
-    if (!form.validate()) {
-      debugPrint("Form validation failed");
-      return;
-    }
+    if (!formKey.currentState!.validate()) return;
 
     emit(SignInLoading());
-    debugPrint("SignInLoading emitted");
 
     try {
       final result = await authRepository.signIn(
@@ -40,27 +30,26 @@ class SignInCubit extends Cubit<SignInState> {
         password: passwordController.text.trim(),
       );
 
-      result.fold(
-        (error) {
-          debugPrint("SignInFailure: $error");
-          emit(SignInFailure(errMessage: error));
-        },
-        (userEntity) {
-          user = userEntity;
-          debugPrint("SignInSuccess: user = $userEntity");
-          emit(SignInSuccess());
-        },
-      );
+      result.fold((error) => emit(SignInFailure(errMessage: error)), (
+        userEntity,
+      ) async {
+        user = userEntity;
+
+        final token = userEntity.token;
+        if (token != null && token.isNotEmpty) {
+          await SecureStorageHelper.saveToken(token); // نفسه
+        }
+
+        emit(SignInSuccess());
+      });
     } catch (e, stack) {
-      debugPrint("Exception in signIn: $e");
       debugPrintStack(stackTrace: stack);
-      emit(SignInFailure(errMessage: e.toString()));
+      emit(SignInFailure(errMessage: "Unexpected error"));
     }
   }
 
   @override
   Future<void> close() {
-    debugPrint("SignInCubit disposed");
     nationalIdController.dispose();
     passwordController.dispose();
     return super.close();

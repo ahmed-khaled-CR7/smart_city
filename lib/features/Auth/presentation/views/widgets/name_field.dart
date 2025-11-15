@@ -5,7 +5,7 @@ import 'package:smart_city/core/widgets/custom_textformfield.dart';
 
 class NameField extends StatelessWidget {
   final TextEditingController controller;
-  const NameField({required this.controller, Key? key}) : super(key: key);
+  const NameField({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:smart_city/core/widgets/custom_textformfield.dart';
 
 class NationalIdField extends StatelessWidget {
   final TextEditingController controller;
-  const NationalIdField({required this.controller, Key? key}) : super(key: key);
+  const NationalIdField({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {

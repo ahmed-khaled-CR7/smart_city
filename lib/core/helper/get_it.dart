@@ -10,34 +10,44 @@ import 'package:smart_city/features/Auth/data/repos/auth_repo_imp.dart';
 import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_in_cubit.dart';
 import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_up_cubit.dart';
 import 'package:smart_city/features/Auth/domain/repos/auth_repo.dart';
+import 'package:smart_city/features/profile/data/repos/profile_repo_imp.dart';
+import 'package:smart_city/features/profile/domain/repos/profile_repo.dart';
+import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setupGetIt() async {
-  // === 1. SharedPreferences ===
+  // SharedPrefe
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  // === 2. CacheHelper (Singleton) ===
+  //CacheHelper
   getIt.registerLazySingleton<CacheHelper>(() => CacheHelper());
-  await CacheHelper.init(); // ← إجباري
+  await CacheHelper.init();
 
-  // === 3. Dio ===
-  final dio = Dio();
-  getIt.registerLazySingleton<Dio>(() => dio);
+  //  Dio ===
+  getIt.registerLazySingleton<Dio>(() => Dio());
 
-  // === 4. ApiConsumer (DioConsumer) ===
   getIt.registerLazySingleton<ApiConsumer>(
-    () => DioConsumer(dio: getIt<Dio>(), prefs: sharedPreferences),
+    () => DioConsumer(dio: getIt<Dio>()),
   );
-  // 5. AuthRepository (المهم!)
+  // 5. AuthRepo
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(api: getIt<ApiConsumer>()),
   );
   getIt.registerFactory<SignUpCubit>(
     () => SignUpCubit(authRepository: getIt<AuthRepository>()),
   );
-  // === 6. Cubits (Factory) ===
+  //  Cubits
   getIt.registerFactory<SignInCubit>(
     () => SignInCubit(authRepository: getIt<AuthRepository>()),
+  );
+  // ProfileRepo
+  getIt.registerLazySingleton<ProfileRepo>(
+    () => ProfileRepoImpl(api: getIt<ApiConsumer>()),
+  );
+
+  // ProfileCubit
+  getIt.registerLazySingleton<ProfileCubit>(
+    () => ProfileCubit(getIt<ProfileRepo>()),
   );
 }

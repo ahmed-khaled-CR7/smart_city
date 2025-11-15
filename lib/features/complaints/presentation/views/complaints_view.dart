@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
-import 'package:smart_city/core/widgets/custom_appbar.dart';
 import 'package:smart_city/features/complaints/presentation/views/widgets/complaints_view_body.dart';
 
 class ComplaintsView extends StatelessWidget {

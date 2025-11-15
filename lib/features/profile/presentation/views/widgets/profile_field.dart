@@ -1,6 +1,7 @@
+// lib/features/profile/presentation/views/widgets/profile_field.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_city/core/utils/app_colors.dart';
 
 class ProfileField extends StatelessWidget {
   final String label;
@@ -12,24 +13,26 @@ class ProfileField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
             style: TextStyle(
               fontSize: 14.sp,
-              color: Colors.grey,
+              color: Colors.grey[700],
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 4.h),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 16.sp,
-              color: AppColors.secondaryColor2,
-              fontWeight: FontWeight.bold,
+          Flexible(
+            child: Text(
+              value,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+              textAlign: TextAlign.end,
             ),
           ),
         ],

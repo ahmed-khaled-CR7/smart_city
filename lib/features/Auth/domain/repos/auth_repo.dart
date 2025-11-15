@@ -1,5 +1,7 @@
+// lib/features/Auth/domain/repos/auth_repo.dart
+
 import 'package:dartz/dartz.dart';
-import 'package:smart_city/features/Auth/domain/entities/user_entity.dart';
+import 'package:smart_city/core/entities/user_entity.dart';
 
 abstract class AuthRepository {
   Future<Either<String, UserEntity>> signUp({

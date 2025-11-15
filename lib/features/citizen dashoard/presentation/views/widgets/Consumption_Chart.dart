@@ -54,8 +54,9 @@ class ConsumptionChart extends StatelessWidget {
                 interval: 1,
                 getTitlesWidget: (value, meta) {
                   final index = value.toInt();
-                  if (index < 0 || index >= _months.length)
+                  if (index < 0 || index >= _months.length) {
                     return const SizedBox();
+                  }
                   return Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
@@ -82,7 +83,7 @@ class ConsumptionChart extends StatelessWidget {
                 interval: 0.5,
                 getTitlesWidget: (value, meta) {
                   return Text(
-                    '${value.toStringAsFixed(2)}',
+                    value.toStringAsFixed(2),
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 11,

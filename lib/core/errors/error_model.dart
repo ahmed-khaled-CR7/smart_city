@@ -1,26 +1,28 @@
 // lib/core/errors/error_model.dart
 
 class ErrorModel {
-  final int? status;
   final String errorMessage;
+  final int? statusCode;
+  final Map<String, dynamic>? errors;
 
-  ErrorModel({this.status, required this.errorMessage});
+  ErrorModel({required this.errorMessage, this.statusCode, this.errors});
 
   factory ErrorModel.fromJson(Map<String, dynamic> json) {
     return ErrorModel(
-      status: json['status'] as int?,
       errorMessage: _extractMessage(json),
+      statusCode: json['statusCode'] ?? json['status'],
+      errors: json['errors'],
     );
   }
 
   static String _extractMessage(Map<String, dynamic> json) {
     return json['message']?.toString() ??
         json['error']?.toString() ??
-        json['detail']?.toString() ??
         json['title']?.toString() ??
-        (json['errors'] is Map
-            ? (json['errors'] as Map).values.first?.toString()
-            : json['errors']?.toString()) ??
-        'An error occurred';
+        'Unknown error';
   }
+
+  @override
+  String toString() =>
+      'ErrorModel(message: $errorMessage, status: $statusCode)';
 }
