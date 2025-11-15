@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
-import 'package:smart_city/features/Auth/presentation/views/signup_view.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({

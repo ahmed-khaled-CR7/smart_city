@@ -82,6 +82,12 @@ class ProfileViewBody extends StatelessWidget {
                       );
                     },
                   ),
+                  SizedBox(height: 10),
+                  CustomButton(
+                    text: 'change password',
+                    onPressed: () {},
+                    color: AppColors.secondaryColor,
+                  ),
                 ],
               ),
             ),

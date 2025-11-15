@@ -43,6 +43,7 @@ class _ComplaintScreenState extends State<ComplaintsViewBody> {
               controller: _detailsController,
               hintText: 'Write your complaint or suggestion here...',
               maxLines: 6,
+              obscureText: false,
             ),
             const SizedBox(height: 32),
             CustomButton(

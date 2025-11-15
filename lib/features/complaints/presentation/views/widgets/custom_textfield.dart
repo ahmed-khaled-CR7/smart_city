@@ -4,12 +4,13 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final int maxLines;
-
+  final bool obscureText;
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
     this.maxLines = 1,
+    required this.obscureText,
   });
 
   @override
@@ -24,11 +25,11 @@ class CustomTextField extends StatelessWidget {
         contentPadding: const EdgeInsets.all(16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide:  BorderSide(color: Colors.grey.shade300),
+          borderSide: BorderSide(color: Colors.grey.shade300),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide:  BorderSide(color: Colors.grey.shade300),
+          borderSide: BorderSide(color: Colors.grey.shade300),
         ),
       ),
     );
