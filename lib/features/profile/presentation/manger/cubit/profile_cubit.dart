@@ -35,7 +35,6 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> logout(BuildContext context) async {
     await SecureStorageHelper.deleteToken();
-
     currentUser = null;
     emit(ProfileInitial());
 

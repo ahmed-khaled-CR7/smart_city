@@ -1,5 +1,4 @@
-// lib/features/Auth/presentation/cubit/sign_in_cubit.dart
-
+// lib/features/auth/presentation/cubit/sign_in_cubit.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_city/core/helper/secure_storage_helper.dart';
@@ -18,6 +17,7 @@ class SignInCubit extends Cubit<SignInState> {
   final TextEditingController passwordController = TextEditingController();
 
   UserEntity? user;
+
   Future<void> signIn() async {
     if (!formKey.currentState!.validate()) return;
 
@@ -35,9 +35,11 @@ class SignInCubit extends Cubit<SignInState> {
       (userEntity) async {
         user = userEntity;
         final token = userEntity.token;
+
         if (token != null && token.isNotEmpty) {
           await SecureStorageHelper.saveToken(token);
         }
+
         emit(SignInSuccess());
       },
     );
