@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/features/bills/presentation/views/bill_details_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_city/features/bills/presentation/cubit/bills_cubit.dart';
 import 'package:smart_city/features/bills/presentation/views/widgets/status_text.dart';
 import 'package:smart_city/features/bills/presentation/views/widgets/view_details_button.dart';
 
@@ -11,6 +13,7 @@ class BillCard extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final bool isPaid;
+  final int id;
 
   const BillCard({
     super.key,
@@ -20,6 +23,7 @@ class BillCard extends StatelessWidget {
     required this.icon,
     required this.iconColor,
     required this.isPaid,
+    required this.id, Future<Null> Function()? onPayPressed,
   });
 
   @override
@@ -66,8 +70,25 @@ class BillCard extends StatelessWidget {
             children: [
               StatusText(isPaid: isPaid),
               ViewDetailsButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, BillDetailsView.routeName);
+                onPressed: () async {
+                  final result = await Navigator.pushNamed(
+                    context,
+                    BillDetailsView.routeName,
+                    arguments: {
+                      'id': id,
+                      'service': service,
+                      'month': month,
+                      'amount': amount,
+                      'isPaid': isPaid,
+                    },
+                  );
+
+                  if (result == true) {
+                    // reload bills list after successful payment
+                    try {
+                      context.read<BillsCubit>().loadBills(1);
+                    } catch (_) {}
+                  }
                 },
               ),
             ],
