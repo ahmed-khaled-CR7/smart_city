@@ -11,6 +11,13 @@ class BillDetailsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final int id = args?['id'] as int? ?? 0;
+    final String service = args?['service'] as String? ?? 'Service';
+    final String month = args?['month'] as String? ?? '';
+    final String amount = args?['amount'] as String? ?? '';
+    final bool isPaid = args?['isPaid'] as bool? ?? false;
+
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.all(20.w),
@@ -30,23 +37,23 @@ class BillDetailsViewBody extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const LabelValueRow(
+                    LabelValueRow(
                       label: 'Service Type',
-                      value: 'Electricity',
+                      value: service,
                     ),
                     SizedBox(height: 10.h),
-                    const LabelValueRow(
+                    LabelValueRow(
                       label: 'Issue Date',
-                      value: '24/08/2024',
+                      value: month,
                     ),
                     Divider(height: 25.h, color: Colors.grey.shade300),
-                    const LabelValueRow(
+                    LabelValueRow(
                       label: 'Total Amount',
-                      value: 'EGP 350.00',
+                      value: amount,
                       isAmount: true,
                     ),
                     Divider(height: 25.h, color: Colors.grey.shade300),
-                    const LabelValueRow(label: 'Status', value: 'Paid'),
+                    LabelValueRow(label: 'Status', value: isPaid ? 'Paid' : 'Unpaid'),
                   ],
                 ),
               ),
@@ -62,8 +69,17 @@ class BillDetailsViewBody extends StatelessWidget {
                     text: 'Pay Now',
                     color: AppColors.primaryColor,
                     textColor: Colors.black,
-                    onPressed: () {
-                      Navigator.pushNamed(context, PaymentMethodView.routeName);
+                    onPressed: () async {
+                      final result = await Navigator.pushNamed(
+                        context,
+                        PaymentMethodView.routeName,
+                        arguments: {'id': id},
+                      );
+
+                      if (result == true) {
+                        // payment was successful, bubble up to bills list to refresh
+                        Navigator.pop(context, true);
+                      }
                     },
                   ),
                   SizedBox(height: 15.h),
