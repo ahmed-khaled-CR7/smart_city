@@ -29,7 +29,6 @@ class EndPoints {
 
   // ── Notifications
   static const String myNotifications = "/api/Notification/my/{citizenId}";
-  // lib/core/database/api/api_key.dart
 }
 
 class ApiKey {

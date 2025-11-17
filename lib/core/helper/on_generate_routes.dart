@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_city/core/utils/main_layout.dart';
 import 'package:smart_city/features/Auth/presentation/views/login_view.dart';
 import 'package:smart_city/features/Auth/presentation/views/signup_view.dart';
+import 'package:smart_city/features/Change%20password/presentation/views/change_pass_view.dart';
 import 'package:smart_city/features/Home/presentation/views/home_view.dart';
 import 'package:smart_city/features/bills/presentation/views/bill_details_view.dart';
 import 'package:smart_city/features/bills/presentation/views/bills_view.dart';
@@ -65,7 +66,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const WaterDashboardView());
     case '/main':
       return MaterialPageRoute(builder: (_) => const MainLayout());
-
+    case ChangePassView.routeName:
+      return MaterialPageRoute(builder: (_) => const ChangePassView());
     default:
       return MaterialPageRoute(
         builder:

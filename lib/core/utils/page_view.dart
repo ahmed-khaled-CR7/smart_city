@@ -27,7 +27,6 @@ class HomePagesView extends StatelessWidget {
       children: [
         HomeView(onNavTap: onNavTap),
         const CitizenDashboardView(),
-
         const NotificationView(),
         const ComplaintsView(),
         const ProfileView(),
