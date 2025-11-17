@@ -10,6 +10,9 @@ import 'package:smart_city/features/Auth/data/repos/auth_repo_imp.dart';
 import 'package:smart_city/features/Auth/domain/repos/auth_repo.dart';
 import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_in_cubit.dart';
 import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_up_cubit.dart';
+import 'package:smart_city/features/Change%20password/data/repos/change_pass_repo_imp.dart';
+import 'package:smart_city/features/Change%20password/domain/repos/change_pass_repo.dart';
+import 'package:smart_city/features/Change%20password/presentation/manger/cubit/change_password_cubit.dart';
 import 'package:smart_city/features/profile/data/repos/profile_repo_imp.dart';
 import 'package:smart_city/features/profile/domain/repos/profile_repo.dart';
 import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
@@ -49,5 +52,12 @@ Future<void> setupGetIt() async {
   // ProfileCubit
   getIt.registerLazySingleton<ProfileCubit>(
     () => ProfileCubit(getIt<ProfileRepo>()),
+  );
+  getIt.registerLazySingleton<ChangePasswordRepo>(
+    () => ChangePasswordRepoImpl(api: getIt<ApiConsumer>()),
+  );
+
+  getIt.registerFactory<ChangePasswordCubit>(
+    () => ChangePasswordCubit(repo: getIt<ChangePasswordRepo>()),
   );
 }
