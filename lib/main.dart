@@ -12,6 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = CustomBlocObserver();
   await Prefs.init();
+  // await setupGetIt();
   setupGetIt();
   runApp(const SmartCity());
 }

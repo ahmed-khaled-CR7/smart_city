@@ -13,6 +13,16 @@ import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_up_cubi
 import 'package:smart_city/features/Change%20password/data/repos/change_pass_repo_imp.dart';
 import 'package:smart_city/features/Change%20password/domain/repos/change_pass_repo.dart';
 import 'package:smart_city/features/Change%20password/presentation/manger/cubit/change_password_cubit.dart';
+import 'package:smart_city/features/bills/data/datasources/bill_remote_datasource.dart';
+import 'package:smart_city/features/bills/data/repositories/bills_repo_impl.dart';
+import 'package:smart_city/features/bills/domain/repositories/bills_repo.dart';
+import 'package:smart_city/features/bills/presentation/cubit/bills_cubit.dart';
+import 'package:smart_city/features/complaints/data/datasources/complaint_remote_datasource.dart';
+import 'package:smart_city/features/complaints/data/repositories/complaint_repo_impl.dart';
+import 'package:smart_city/features/complaints/domain/repositories/complaint_repo.dart';
+import 'package:smart_city/features/complaints/domain/usecases/create_complaint_usecase.dart';
+import 'package:smart_city/features/complaints/domain/usecases/get_my_complaints_usecase.dart';
+import 'package:smart_city/features/complaints/presentation/cubit/complaints_cubit.dart';
 import 'package:smart_city/features/profile/data/repos/profile_repo_imp.dart';
 import 'package:smart_city/features/profile/domain/repos/profile_repo.dart';
 import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
@@ -59,5 +69,42 @@ Future<void> setupGetIt() async {
 
   getIt.registerFactory<ChangePasswordCubit>(
     () => ChangePasswordCubit(repo: getIt<ChangePasswordRepo>()),
+  );
+
+  // Bills
+  getIt.registerLazySingleton<BillRemoteDataSource>(
+    () => BillRemoteDataSourceImpl(getIt<ApiConsumer>() as Dio),
+  );
+
+  getIt.registerLazySingleton<BillsRepository>(
+    () => BillsRepoImpl(getIt<BillRemoteDataSource>()),
+  );
+
+  getIt.registerFactory<BillsCubit>(
+    () => BillsCubit(getIt<BillsRepository>())
+  );
+
+  // Complains
+  getIt.registerLazySingleton<ComplaintRemoteDataSource>(
+    () => ComplaintRemoteDataSourceImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<ComplaintRepository>(
+    () => ComplaintRepoImpl(getIt<ComplaintRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<GetMyComplaintsUseCase>(
+    () => GetMyComplaintsUseCase(getIt<ComplaintRepository>()),
+  );
+
+  getIt.registerLazySingleton<CreateComplaintUseCase>(
+    () => CreateComplaintUseCase(getIt<ComplaintRepository>()),
+  );
+
+  getIt.registerFactory<ComplaintsCubit>(
+    () => ComplaintsCubit(
+      getMyComplaintsUseCase: getIt<GetMyComplaintsUseCase>(),
+      createComplaintUseCase: getIt<CreateComplaintUseCase>(),
+    ),
   );
 }
