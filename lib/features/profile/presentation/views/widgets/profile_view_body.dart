@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
 import 'package:smart_city/features/Change%20password/presentation/views/change_pass_view.dart';
-import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
+import 'package:smart_city/features/profile/presentation/manager/cubit/profile_cubit.dart';
 import 'package:smart_city/features/profile/presentation/views/widgets/logout_dialog.dart';
 import 'package:smart_city/features/profile/presentation/views/widgets/profile_header.dart';
 import 'package:smart_city/features/profile/presentation/views/widgets/profile_avatar.dart';

@@ -7,7 +7,7 @@ import 'package:smart_city/features/notification/presentation/manger/cubit/notif
 import 'package:smart_city/features/notification/presentation/views/widget/delete_notfi.dart';
 import 'package:smart_city/features/notification/presentation/views/widget/notifcation_snackbar.dart';
 import 'package:smart_city/features/notification/presentation/views/widget/notification_card.dart';
-import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
+import 'package:smart_city/features/profile/presentation/manager/cubit/profile_cubit.dart';
 
 class NotificationViewBody extends StatefulWidget {
   const NotificationViewBody({super.key});

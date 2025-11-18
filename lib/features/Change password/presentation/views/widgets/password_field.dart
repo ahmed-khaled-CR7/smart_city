@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_city/features/Change%20password/presentation/manger/cubit/change_password_cubit.dart';
+import 'package:smart_city/features/Change%20password/presentation/manager/cubit/change_password_cubit.dart';
 import 'package:smart_city/features/Change%20password/presentation/views/widgets/Password%20Strength%20Hint%20.dart';
 import 'package:smart_city/features/Change%20password/presentation/views/widgets/single_pass_field.dart';
 

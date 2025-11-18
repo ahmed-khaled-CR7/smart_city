@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
+import 'package:smart_city/features/profile/presentation/manager/cubit/profile_cubit.dart';
 import 'package:smart_city/features/profile/presentation/views/widgets/profile_field.dart';
 
 class ProfileInfoCard extends StatelessWidget {

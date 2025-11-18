@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_city/core/helper/get_it.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
-import 'package:smart_city/features/Change%20password/presentation/manger/cubit/change_password_cubit.dart';
+import 'package:smart_city/features/Change%20password/presentation/manager/cubit/change_password_cubit.dart';
 import 'package:smart_city/features/Change%20password/presentation/views/widgets/change_pass_appbar.dart';
 import 'package:smart_city/features/Change%20password/presentation/views/widgets/change_pass_view_body.dart';
 

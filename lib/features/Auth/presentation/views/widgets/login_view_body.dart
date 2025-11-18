@@ -6,7 +6,7 @@ import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
 import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_in_cubit.dart';
 import 'package:smart_city/features/Auth/presentation/views/widgets/Custom_ScaffoldMessenger.dart';
-import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
+import 'package:smart_city/features/profile/presentation/manager/cubit/profile_cubit.dart';
 import '../widgets/login_logo.dart';
 import '../widgets/login_title.dart';
 import '../widgets/divider_or.dart';

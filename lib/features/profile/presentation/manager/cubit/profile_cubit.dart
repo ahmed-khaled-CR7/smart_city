@@ -15,28 +15,36 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> fetchUser() async {
+    if (isClosed) return;
     emit(ProfileLoading());
     try {
       final result = await profileRepo.getCurrentUser();
-      result.fold((failure) => emit(ProfileFailure(failure.message)), (user) {
-        currentUser = user;
-        emit(ProfileSuccess(user));
-      });
+      if (isClosed) return;
+
+      result.fold(
+        (failure) {
+          if (!isClosed) emit(ProfileFailure(failure.message));
+        },
+        (user) {
+          currentUser = user;
+          if (!isClosed) emit(ProfileSuccess(user));
+        },
+      );
     } catch (e, stack) {
       debugPrintStack(stackTrace: stack);
-      emit(ProfileFailure('Unexpected error: $e'));
+      if (!isClosed) emit(ProfileFailure('Unexpected error: $e'));
     }
   }
 
   void clear() {
     currentUser = null;
-    emit(ProfileInitial());
+    if (!isClosed) emit(ProfileInitial());
   }
 
   Future<void> logout(BuildContext context) async {
     await SecureStorageHelper.deleteToken();
     currentUser = null;
-    emit(ProfileInitial());
+    if (!isClosed) emit(ProfileInitial());
 
     Navigator.pushNamedAndRemoveUntil(
       context,

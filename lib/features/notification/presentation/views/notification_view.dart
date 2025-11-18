@@ -5,7 +5,7 @@ import 'package:smart_city/core/helper/get_it.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/features/notification/presentation/manger/cubit/notification_cubit.dart';
 import 'package:smart_city/features/notification/presentation/views/widget/notification_view_body.dart';
-import 'package:smart_city/features/profile/presentation/manger/cubit/profile_cubit.dart';
+import 'package:smart_city/features/profile/presentation/manager/cubit/profile_cubit.dart';
 
 class NotificationView extends StatelessWidget {
   const NotificationView({super.key});
