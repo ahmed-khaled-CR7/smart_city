@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_city/core/widgets/custom_textformfield.dart';
-import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_in_cubit.dart';
+import 'package:smart_city/features/Auth/presentation/manager/cubit/sign_in_cubit.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});

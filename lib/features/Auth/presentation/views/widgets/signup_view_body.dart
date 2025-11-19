@@ -6,7 +6,7 @@ import 'package:smart_city/core/config/signup_fields_config.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/utils/app_text_styls.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
-import 'package:smart_city/features/Auth/presentation/mannger/cubit/sign_up_cubit.dart';
+import 'package:smart_city/features/Auth/presentation/manager/cubit/sign_up_cubit.dart';
 import 'package:smart_city/features/Auth/presentation/views/login_view.dart';
 import 'package:smart_city/features/Auth/presentation/views/widgets/Custom_ScaffoldMessenger.dart';
 import 'package:smart_city/features/Auth/presentation/views/widgets/auth_dialog.dart';
