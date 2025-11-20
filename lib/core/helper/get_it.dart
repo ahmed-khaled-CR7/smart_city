@@ -11,14 +11,12 @@ import 'package:smart_city/features/Auth/presentation/manager/cubit/sign_up_cubi
 import 'package:smart_city/features/Change%20password/data/repos/change_pass_repo_imp.dart';
 import 'package:smart_city/features/Change%20password/domain/repos/change_pass_repo.dart';
 import 'package:smart_city/features/Change%20password/presentation/manager/cubit/change_password_cubit.dart';
+import 'package:smart_city/features/bills/data/repositories/bills_repo_impl.dart';
+import 'package:smart_city/features/bills/domain/repositories/bills_repo.dart';
 import 'package:smart_city/features/bills/presentation/manager/cubit/bills_cubit.dart';
 import 'package:smart_city/features/notification/data/repos/notification_repo_imp.dart';
 import 'package:smart_city/features/notification/domain/repos/notification_repo.dart';
 import 'package:smart_city/features/notification/presentation/manger/cubit/notification_cubit.dart';
-
-import 'package:smart_city/features/bills/data/repositories/bills_repo_impl.dart';
-import 'package:smart_city/features/bills/domain/repositories/bills_repo.dart';
-
 import 'package:smart_city/features/complaints/data/datasources/complaint_remote_datasource.dart';
 import 'package:smart_city/features/complaints/data/repositories/complaint_repo_impl.dart';
 import 'package:smart_city/features/complaints/domain/repositories/complaint_repo.dart';
@@ -75,9 +73,8 @@ Future<void> setupGetIt() async {
 
   // Bills
   getIt.registerLazySingleton<BillsRepository>(
-    () => BillsRepoImpl(getIt<ApiConsumer>()),
+    () => BillsRepoImpl(api: getIt<ApiConsumer>()),
   );
-
   getIt.registerFactory<BillsCubit>(() => BillsCubit(getIt<BillsRepository>()));
 
   // Complains

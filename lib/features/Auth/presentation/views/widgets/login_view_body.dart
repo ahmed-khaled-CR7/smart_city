@@ -1,4 +1,3 @@
-// lib/features/auth/presentation/views/widgets/login_view_body.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,12 +5,12 @@ import 'package:smart_city/core/utils/app_colors.dart';
 import 'package:smart_city/core/widgets/custom_button.dart';
 import 'package:smart_city/features/Auth/presentation/manager/cubit/sign_in_cubit.dart';
 import 'package:smart_city/features/Auth/presentation/views/widgets/Custom_ScaffoldMessenger.dart';
-import 'package:smart_city/features/profile/presentation/manager/cubit/profile_cubit.dart';
 import '../widgets/login_logo.dart';
 import '../widgets/login_title.dart';
 import '../widgets/divider_or.dart';
 import '../widgets/signup_link.dart';
 import 'login_form.dart';
+import 'package:smart_city/core/helper/secure_storage_helper.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});
@@ -27,13 +26,16 @@ class LoginViewBody extends StatelessWidget {
           child: BlocConsumer<SignInCubit, SignInState>(
             listener: (context, state) {
               if (state is SignInSuccess) {
-                context.read<ProfileCubit>().fetchUser();
-
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  '/main',
-                  (route) => false,
-                );
+                Future.microtask(() async {
+                  final token = await SecureStorageHelper.getToken();
+                  if (token != null && token.isNotEmpty) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/main',
+                      (route) => false,
+                    );
+                  }
+                });
               } else if (state is SignInFailure) {
                 CustomScaffoldMessenger.showError(context, state.errMessage);
               }

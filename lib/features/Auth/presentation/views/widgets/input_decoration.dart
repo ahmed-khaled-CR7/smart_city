@@ -1,7 +1,6 @@
-// lib/core/widgets/input_decoration.dart
 import 'package:flutter/material.dart';
 
-InputDecoration _inputDecoration(String label, IconData icon) {
+InputDecoration inputDecoration(String label, IconData icon) {
   return InputDecoration(
     labelText: label,
     prefixIcon: Icon(icon, color: Colors.grey),

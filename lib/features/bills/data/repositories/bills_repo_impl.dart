@@ -1,5 +1,3 @@
-// lib/features/bills/data/repositories/bills_repo_impl.dart
-
 import 'package:dartz/dartz.dart';
 import 'package:smart_city/core/database/api/api_consumer.dart';
 import 'package:smart_city/core/database/api/end_ponits.dart';
@@ -11,7 +9,7 @@ import 'package:smart_city/features/bills/domain/repositories/bills_repo.dart';
 class BillsRepoImpl implements BillsRepository {
   final ApiConsumer api;
 
-  BillsRepoImpl(this.api);
+  BillsRepoImpl({required this.api});
 
   @override
   Future<Either<String, List<BillEntity>>> getMyBills(int citizenId) async {
@@ -21,7 +19,6 @@ class BillsRepoImpl implements BillsRepository {
         requireAuth: true,
       );
 
-      // الـ API بيرجّع إما { "data": [...] } أو الليسة مباشرة
       final List<dynamic> data =
           response['data'] is List
               ? response['data']
