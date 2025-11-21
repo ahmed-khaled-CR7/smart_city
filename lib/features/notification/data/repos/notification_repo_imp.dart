@@ -14,21 +14,14 @@ class NotificationRepoImp implements NotificationRepository {
   Future<List<NotificationEntity>> getMyNotifications(int citizenId) async {
     try {
       final dynamic response = await api.get(
-        "${EndPoints.myNotifications}/my/$citizenId",
+        EndPoints.myNotifications(citizenId),
         requireAuth: true,
       );
 
-      List<dynamic> list = [];
-
-      if (response is List) {
-        list = response;
-      } else if (response is Map<String, dynamic>) {
-        final data =
-            response['data'] ?? response['notifications'] ?? response['result'];
-        if (data is List) {
-          list = data;
-        }
-      }
+      final List<dynamic> list =
+          (response is Map<String, dynamic>)
+              ? (response['data'] as List<dynamic>? ?? [])
+              : (response is List ? response : []);
 
       return list
           .map(

@@ -20,7 +20,7 @@ class NotificationView extends StatelessWidget {
       ],
       child: Scaffold(
         backgroundColor: AppColors.lightprimaryColor,
-        body: const SafeArea(child: NotificationViewBody()),
+        body: NotificationViewBody(),
       ),
     );
   }

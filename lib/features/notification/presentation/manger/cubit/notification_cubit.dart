@@ -9,6 +9,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   NotificationCubit(this.repo) : super(NotificationInitial());
 
   Future<void> fetchMyNotifications(int citizenId) async {
+    if (isClosed) return;
     emit(NotificationLoading());
 
     try {
@@ -16,10 +17,12 @@ class NotificationCubit extends Cubit<NotificationState> {
 
       final notifications = await repo.getMyNotifications(citizenId);
 
+      if (isClosed) return;
       log("✅ Notifications fetched: ${notifications.length}");
 
       emit(NotificationSuccess(notifications));
     } catch (e, stackTrace) {
+      if (isClosed) return;
       log("❌ Notifications Error: $e");
       log("⚠️ STACKTRACE:", error: e, stackTrace: stackTrace);
 
