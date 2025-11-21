@@ -24,18 +24,12 @@ class DioConsumer extends ApiConsumer {
             final token = await SecureStorageHelper.getToken();
             if (token != null && token.trim().isNotEmpty) {
               options.headers['Authorization'] = 'Bearer $token';
-              debugPrint('Token Sent: Bearer ${token.substring(0, 10)}...');
+              debugPrint('Token Sent: Bearer ${token.substring(0, 15)}...');
             } else {
-              debugPrint('No token found for: ${options.path}');
+              debugPrint('⚠ No token found for: ${options.path}');
             }
-          } else {
-            debugPrint('Public request (no auth): ${options.path}');
           }
           handler.next(options);
-        },
-        onError: (e, handler) {
-          debugPrint('Dio Error: ${e.message}');
-          handler.next(e);
         },
       ),
     );
