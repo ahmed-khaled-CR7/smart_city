@@ -1,5 +1,3 @@
-// lib/core/helper/on_generate_routes.dart (أو أي اسم ملفك)
-
 import 'package:flutter/material.dart';
 import 'package:smart_city/core/utils/main_layout.dart';
 import 'package:smart_city/features/Auth/presentation/views/login_view.dart';
@@ -36,12 +34,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case ProfileView.routeName:
       return MaterialPageRoute(builder: (_) => const ProfileView());
 
-  // هنا التعديل المهم
-    case '/payment-method':
-      final billId = settings.arguments as int;
-      return MaterialPageRoute(
-        builder: (_) => PaymentMethodView(billId: billId),
-      );
+    case PaymentMethodView.routeName:
+      return MaterialPageRoute(builder: (_) => const PaymentMethodView());
 
     case PaymentConfirmationView.routeName:
       return MaterialPageRoute(builder: (_) => const PaymentConfirmationView());
@@ -62,27 +56,22 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
 
     case ComplaintsView.routeName:
       return MaterialPageRoute(builder: (_) => const ComplaintsView());
-
     case CitizenDashboardView.routeName:
       return MaterialPageRoute(builder: (_) => const CitizenDashboardView());
-
     case ElectricityDashboardView.routeName:
-      return MaterialPageRoute(builder: (_) => const ElectricityDashboardView());
-
+      return MaterialPageRoute(
+        builder: (_) => const ElectricityDashboardView(),
+      );
     case WaterDashboardView.routeName:
       return MaterialPageRoute(builder: (_) => const WaterDashboardView());
-
     case '/main':
       return MaterialPageRoute(builder: (_) => const MainLayout());
-
     case ChangePassView.routeName:
       return MaterialPageRoute(builder: (_) => const ChangePassView());
-
     default:
       return MaterialPageRoute(
-        builder: (_) => const Scaffold(
-          body: Center(child: Text('Page not found')),
-        ),
+        builder:
+            (_) => const Scaffold(body: Center(child: Text('Page not found'))),
       );
   }
 }

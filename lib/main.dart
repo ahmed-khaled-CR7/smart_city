@@ -1,5 +1,3 @@
-// lib/main.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,15 +6,8 @@ import 'package:smart_city/core/helper/on_generate_routes.dart';
 import 'package:smart_city/core/services/custom_bloc_observer.dart';
 import 'package:smart_city/core/services/shared_pref_singleton.dart';
 import 'package:smart_city/core/utils/app_colors.dart';
-
-// Profile Cubit
 import 'package:smart_city/features/profile/presentation/manager/cubit/profile_cubit.dart';
-// Complaints Cubit
-import 'features/complaints/presentation/cubit/complaints_cubit.dart';
-// Bills Cubit ← جديد
-import 'features/bills/presentation/manager/cubit/bills_cubit.dart';
-
-import 'features/splash/presentation/views/splash_view.dart';
+import 'package:smart_city/features/splash/presentation/views/splash_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,17 +29,7 @@ class SmartCity extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider<ProfileCubit>(
-              create: (_) => getIt<ProfileCubit>(),
-            ),
-            BlocProvider<ComplaintsCubit>(
-              create: (_) => getIt<ComplaintsCubit>(),
-            ),
-
-            // السطر السحري اللي حل كل المشاكل
-            BlocProvider<BillsCubit>(
-              create: (_) => getIt<BillsCubit>()..getMyBills(1),
-            ),
+            BlocProvider<ProfileCubit>(create: (_) => getIt<ProfileCubit>()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

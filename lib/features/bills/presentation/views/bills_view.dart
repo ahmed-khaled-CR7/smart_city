@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_city/core/helper/get_it.dart' as di; // تأكد إن الـ alias موجود
+import 'package:smart_city/core/helper/get_it.dart' as di;
 import 'package:smart_city/core/utils/app_colors.dart';
+import 'package:smart_city/features/bills/data/repositories/bills_repo_impl.dart';
 import 'package:smart_city/features/bills/presentation/manager/cubit/bills_cubit.dart';
 import 'package:smart_city/features/bills/presentation/views/widgets/bills_view_body.dart';
 
@@ -14,8 +15,7 @@ class BillsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      // تم التعديل هنا: نستخدم getIt<BillsCubit>() بدل BillsRepoImpl
-      create: (_) => di.getIt<BillsCubit>()..getMyBills(1), // تحميل الفواتير فور الدخول
+      create: (_) => BillsCubit(di.getIt<BillsRepoImpl>()),
       child: Scaffold(
         backgroundColor: const Color(0xFFFAF7EF),
         appBar: AppBar(

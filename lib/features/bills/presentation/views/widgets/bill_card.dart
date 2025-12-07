@@ -1,10 +1,10 @@
 // lib/features/bills/presentation/views/widgets/bill_card.dart
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_city/features/bills/presentation/manager/cubit/bills_cubit.dart';
 import 'package:smart_city/features/bills/presentation/views/bill_details_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_city/features/bills/presentation/views/widgets/status_text.dart';
 import 'package:smart_city/features/bills/presentation/views/widgets/view_details_button.dart';
 
@@ -16,6 +16,7 @@ class BillCard extends StatelessWidget {
   final Color iconColor;
   final bool isPaid;
   final int id;
+  final VoidCallback? onPayPressed;
 
   const BillCard({
     super.key,
@@ -26,28 +27,20 @@ class BillCard extends StatelessWidget {
     required this.iconColor,
     required this.isPaid,
     required this.id,
+    this.onPayPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.h),
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Service Name + Icon
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -62,13 +55,11 @@ class BillCard extends StatelessWidget {
               CircleAvatar(
                 radius: 20.r,
                 backgroundColor: iconColor.withOpacity(0.2),
-                child: Icon(icon, color: iconColor, size: 24.sp),
+                child: Icon(icon, color: iconColor, size: 22.sp),
               ),
             ],
           ),
-          SizedBox(height: 6.h),
-
-          // Month + Amount
+          SizedBox(height: 5.h),
           Text(
             '$month - $amount',
             style: TextStyle(
@@ -77,9 +68,7 @@ class BillCard extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 12.h),
-
-          // Status + View Details Button
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -99,43 +88,17 @@ class BillCard extends StatelessWidget {
                   );
 
                   if (result == true) {
-                    context.read<BillsCubit>().getMyBills(1);
+                    try {
+                      context.read<BillsCubit>().getMyBills(1);
+                    } catch (_) {}
                   }
                 },
               ),
             ],
           ),
 
-          // Pay Now Button (ظاهر بس لو الفاتورة مش مدفوعة)
-          if (!isPaid)
-            Padding(
-              padding: EdgeInsets.only(top: 16.h),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // ده اللي هيطلّع الـ Dialog الجميل فورًا
-                    context.read<BillsCubit>().emit(BillPaymentSuccess());
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0B214A),
-                    foregroundColor: Colors.white,
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                  ),
-                  child: Text(
-                    "Pay Now",
-                    style: TextStyle(
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          if (!isPaid && onPayPressed != null)
+            TextButton(onPressed: onPayPressed, child: const Text("Pay Now")),
         ],
       ),
     );
