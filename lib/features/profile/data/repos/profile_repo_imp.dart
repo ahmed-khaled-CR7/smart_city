@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_city/core/database/api/api_consumer.dart';
-import 'package:smart_city/core/database/api/end_ponits.dart';
+import 'package:smart_city/core/database/api/end_points.dart';
 import 'package:smart_city/core/database/cache/cache_helper.dart';
 import 'package:smart_city/core/entities/user_entity.dart';
 import 'package:smart_city/core/errors/expentions.dart';

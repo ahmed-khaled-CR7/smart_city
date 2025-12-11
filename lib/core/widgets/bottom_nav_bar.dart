@@ -28,52 +28,55 @@ class CustomBottomNavBar extends StatelessWidget {
       itemLabelStyle: const TextStyle(fontSize: 10),
       bottomBarItems: _buildBottomBarItems(),
       onTap: onTap,
-      kIconSize: 34.0,
+      kIconSize: 24.0,
     );
   }
 
   List<BottomBarItem> _buildBottomBarItems() {
     return [
-      BottomBarItem(
-        inActiveItem: Icon(Icons.home_outlined, color: Colors.grey.shade600),
-        activeItem: const Icon(Icons.home_rounded, color: Colors.white),
-        itemLabel: 'Home',
+      _buildItem(
+        inactiveIcon: Icons.home_outlined,
+        activeIcon: Icons.home_rounded,
+        label: 'Home',
       ),
-      BottomBarItem(
-        inActiveItem: Icon(Icons.apps_outlined, color: Colors.grey.shade600),
-        activeItem: const Icon(Icons.apps_rounded, color: Colors.white),
-        itemLabel: 'Utils',
+      _buildItem(
+        inactiveIcon: Icons.apps_outlined,
+        activeIcon: Icons.apps_rounded,
+        label: 'Utils',
       ),
-      BottomBarItem(
-        inActiveItem: Icon(
-          Icons.notifications_outlined,
-          color: Colors.grey.shade600,
-        ),
-        activeItem: const Icon(
-          Icons.notifications_rounded,
-          color: Colors.white,
-        ),
-        itemLabel: 'Notifications',
+      _buildItem(
+        inactiveIcon: Icons.notifications_outlined,
+        activeIcon: Icons.notifications_rounded,
+        label: 'Notifications',
       ),
-      BottomBarItem(
-        inActiveItem: Icon(
-          Icons.report_problem_rounded,
-          color: Colors.grey.shade600,
-        ),
-        activeItem: const Icon(
-          Icons.report_problem_rounded,
-          color: Colors.white,
-        ),
-        itemLabel: 'complaints',
+      _buildItem(
+        inactiveIcon: Icons.report_problem_rounded,
+        activeIcon: Icons.report_problem_rounded,
+        label: 'Complaints',
       ),
-      BottomBarItem(
-        inActiveItem: Icon(
-          Icons.person_outline_rounded,
-          color: Colors.grey.shade600,
-        ),
-        activeItem: const Icon(Icons.person_rounded, color: Colors.white),
-        itemLabel: 'Profile',
+      _buildItem(
+        inactiveIcon: Icons.person_outline_rounded,
+        activeIcon: Icons.person_rounded,
+        label: 'Profile',
       ),
     ];
+  }
+
+  BottomBarItem _buildItem({
+    required IconData inactiveIcon,
+    required IconData activeIcon,
+    required String label,
+  }) {
+    return BottomBarItem(
+      inActiveItem: Icon(inactiveIcon, color: Colors.grey.shade600),
+
+      /// 🔵 الدائرة الزرقاء الغامقة مع الآيقونة البيضاء - خليتها بحجم ثابت وcentered
+      activeItem: Icon(
+        activeIcon,
+        color: Colors.white,
+      ),
+
+      itemLabel: label,
+    );
   }
 }

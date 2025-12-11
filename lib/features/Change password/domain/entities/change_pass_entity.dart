@@ -1,4 +1,4 @@
-import 'package:smart_city/core/database/api/end_ponits.dart';
+import 'package:smart_city/core/database/api/end_points.dart';
 
 class ChangePasswordEntity {
   final String oldPassword;

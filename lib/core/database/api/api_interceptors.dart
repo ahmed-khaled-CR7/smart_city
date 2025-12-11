@@ -2,7 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:smart_city/core/database/api/end_ponits.dart';
+import 'package:smart_city/core/database/api/end_points.dart';
 import 'package:smart_city/core/database/cache/cache_helper.dart';
 
 class ApiInterceptor extends Interceptor {

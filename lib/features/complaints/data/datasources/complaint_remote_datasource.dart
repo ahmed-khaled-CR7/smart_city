@@ -1,4 +1,5 @@
-import 'package:dio/dio.dart';
+import 'package:smart_city/core/database/api/api_consumer.dart';
+import 'package:smart_city/core/database/api/end_points.dart';
 import '../dtos/complaint_create_dto.dart';
 
 abstract class ComplaintRemoteDataSource {
@@ -7,31 +8,47 @@ abstract class ComplaintRemoteDataSource {
 }
 
 class ComplaintRemoteDataSourceImpl implements ComplaintRemoteDataSource {
-  final Dio dio;
+  final ApiConsumer api;
 
-  ComplaintRemoteDataSourceImpl(this.dio);
+  ComplaintRemoteDataSourceImpl(this.api);
 
   @override
   Future<List<dynamic>> getMyComplaints(int citizenId) async {
-    final response = await dio.get("/api/complaints/my/$citizenId"); 
+    final response = await api.get(
+      EndPoints.myComplaints(citizenId),
+      requireAuth: true,
+    );
 
-    if (response.statusCode == 200) {
-      return response.data as List<dynamic>;
-    } else {
-      throw Exception("Failed to load complaints: ${response.statusCode}");
-    }
+    // ----------------------
+    // Case 1: API returns a raw List
+    // ----------------------
+    final data = response["data"];
+    if (data is List) return data;
+    return [];
+
+    // ----------------------
+    // Case 2: API returns { "data": [...] }
+    // ----------------------
+    // if (response is Map<String, dynamic>) {
+    //   final data = response["data"];
+    //   if (data is List) {
+    //     return data;
+    //   }
+    // }
+
+    // fallback (empty list)
+    // return [];
   }
 
   @override
-  Future<void> createComplaint(int citizenId, ComplaintCreateDto complaint) async {
-    final response = await dio.post(
-      "/api/complaints",
-      queryParameters: {'citizenId': citizenId}, 
+  Future<void> createComplaint(
+    int citizenId,
+    ComplaintCreateDto complaint,
+  ) async {
+    await api.post(
+      EndPoints.createComplaint(citizenId),
       data: complaint.toJson(),
+      requireAuth: true,
     );
-
-    if (response.statusCode != 200) {
-      throw Exception("Failed to create complaint: ${response.statusCode}");
-    }
   }
 }

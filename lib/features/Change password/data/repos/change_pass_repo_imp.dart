@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:smart_city/core/database/api/api_consumer.dart';
-import 'package:smart_city/core/database/api/end_ponits.dart';
+import 'package:smart_city/core/database/api/end_points.dart';
 import 'package:smart_city/core/errors/expentions.dart';
 import 'package:smart_city/core/errors/failure.dart';
 import 'package:smart_city/features/Change%20password/domain/entities/change_pass_entity.dart';

@@ -6,7 +6,7 @@ import 'package:smart_city/core/utils/app_strings.dart';
 class CacheHelper {
   // Singleton
   static final CacheHelper _instance = CacheHelper._internal();
-  factory CacheHelper() => _instance;
+  factory CacheHelper(SharedPreferences sharedPreferences) => _instance;
   CacheHelper._internal();
 
   static late SharedPreferences _prefs;

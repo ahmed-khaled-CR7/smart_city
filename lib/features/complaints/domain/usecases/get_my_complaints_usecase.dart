@@ -7,7 +7,9 @@ class GetMyComplaintsUseCase {
 
   GetMyComplaintsUseCase(this.repository);
 
-  Future<Either<String, List<ComplaintEntity>>> call({required int citizenId}) async {
+  Future<Either<String, List<ComplaintEntity>>> call({
+    required int citizenId,
+  }) async {
     return await repository.getMyComplaints(citizenId);
   }
 }

@@ -11,7 +11,8 @@ class ComplaintRepoImpl implements ComplaintRepository {
   ComplaintRepoImpl(this.remote);
 
   @override
-  Future<Either<String, void>> createComplaint(int citizenId, ComplaintCreateDto complaint) async {
+  Future<Either<String, void>> createComplaint(
+      int citizenId, ComplaintCreateDto complaint) async {
     try {
       await remote.createComplaint(citizenId, complaint);
       return const Right(unit);
@@ -21,12 +22,23 @@ class ComplaintRepoImpl implements ComplaintRepository {
   }
 
   @override
-  Future<Either<String, List<ComplaintEntity>>> getMyComplaints(int citizenId) async {
+  Future<Either<String, List<ComplaintEntity>>> getMyComplaints(
+      int citizenId) async {
     try {
-      final complaintsJson = await remote.getMyComplaints(citizenId);
-      final complaints = complaintsJson
+      // ← مفيش parameters للـ data source
+      final response = await remote.getMyComplaints(citizenId);
+
+      /// لو السيرفر رجع null → رجع list فاضية
+      if (response == null) {
+        return const Right([]);
+      }
+
+      /// تحويل JSON إلى Model → ثم إلى Entity
+      final complaints = response
           .map((json) => ComplaintModel.fromJson(json))
+          .cast<ComplaintEntity>()
           .toList();
+
       return Right(complaints);
     } catch (e) {
       return Left(e.toString());

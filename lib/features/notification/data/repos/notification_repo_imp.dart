@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_city/core/database/api/api_consumer.dart';
-import 'package:smart_city/core/database/api/end_ponits.dart';
+import 'package:smart_city/core/database/api/end_points.dart';
 import 'package:smart_city/features/notification/data/models/notification_model.dart';
 import 'package:smart_city/features/notification/domain/entities/notification_entity.dart';
 import 'package:smart_city/features/notification/domain/repos/notification_repo.dart';

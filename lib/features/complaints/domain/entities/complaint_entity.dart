@@ -5,7 +5,7 @@ class ComplaintEntity extends Equatable {
   final String title;
   final String description;
   final DateTime dateSubmitted;
-  final String status;
+  final int status;
   final String location;
   final String? imageUrl;
   final int citizenId;
@@ -15,7 +15,7 @@ class ComplaintEntity extends Equatable {
     required this.title,
     required this.description,
     required this.dateSubmitted,
-    required this.status,
+    required this.status,  
     required this.location,
     this.imageUrl,
     required this.citizenId,

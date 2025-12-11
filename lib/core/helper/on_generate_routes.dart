@@ -10,6 +10,10 @@ import 'package:smart_city/features/citizen%20dashoard/presentation/views/citize
 import 'package:smart_city/features/citizen%20dashoard/presentation/views/electricty_dashboard_view.dart';
 import 'package:smart_city/features/citizen%20dashoard/presentation/views/water_dashboard_view.dart';
 import 'package:smart_city/features/complaints/presentation/views/complaints_view.dart';
+import 'package:smart_city/features/complaints/presentation/views/complaint_details_view.dart';
+
+import 'package:smart_city/features/complaints/presentation/views/my_complaints_and_suggestions_view.dart';
+
 import 'package:smart_city/features/notification/presentation/views/notification_view.dart';
 import 'package:smart_city/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:smart_city/features/payment/presentation/views/payment_confirmation_view.dart';
@@ -34,8 +38,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case ProfileView.routeName:
       return MaterialPageRoute(builder: (_) => const ProfileView());
 
-    case PaymentMethodView.routeName:
-      return MaterialPageRoute(builder: (_) => const PaymentMethodView());
+    case '/payment-method':
+      final billId = settings.arguments as int;
+      return MaterialPageRoute(
+        builder: (_) => PaymentMethodView(billId: billId),
+      );
 
     case PaymentConfirmationView.routeName:
       return MaterialPageRoute(builder: (_) => const PaymentConfirmationView());
@@ -56,22 +63,39 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
 
     case ComplaintsView.routeName:
       return MaterialPageRoute(builder: (_) => const ComplaintsView());
+
+    case MyComplaintsAndSuggestionsView.routeName:
+      return MaterialPageRoute(
+        builder: (_) => const MyComplaintsAndSuggestionsView(),
+        settings: settings,
+      );
+
+    case ComplaintDetailsView.routeName:
+      return MaterialPageRoute(
+        builder: (_) => const ComplaintDetailsView(),
+        settings: settings,
+      );
+
     case CitizenDashboardView.routeName:
       return MaterialPageRoute(builder: (_) => const CitizenDashboardView());
+
     case ElectricityDashboardView.routeName:
-      return MaterialPageRoute(
-        builder: (_) => const ElectricityDashboardView(),
-      );
+      return MaterialPageRoute(builder: (_) => const ElectricityDashboardView());
+
     case WaterDashboardView.routeName:
       return MaterialPageRoute(builder: (_) => const WaterDashboardView());
+
     case '/main':
       return MaterialPageRoute(builder: (_) => const MainLayout());
+
     case ChangePassView.routeName:
       return MaterialPageRoute(builder: (_) => const ChangePassView());
+
     default:
       return MaterialPageRoute(
-        builder:
-            (_) => const Scaffold(body: Center(child: Text('Page not found'))),
+        builder: (_) => const Scaffold(
+          body: Center(child: Text('Page not found')),
+        ),
       );
   }
 }

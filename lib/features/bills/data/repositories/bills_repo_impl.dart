@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:smart_city/core/database/api/api_consumer.dart';
-import 'package:smart_city/core/database/api/end_ponits.dart';
+import 'package:smart_city/core/database/api/end_points.dart';
 import 'package:smart_city/core/errors/expentions.dart';
 import 'package:smart_city/features/bills/data/models/bill_model.dart';
 import 'package:smart_city/features/bills/domain/entities/bill_entity.dart';

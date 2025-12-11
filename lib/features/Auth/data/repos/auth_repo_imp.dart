@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:smart_city/core/database/api/api_consumer.dart';
-import 'package:smart_city/core/database/api/end_ponits.dart';
+import 'package:smart_city/core/database/api/end_points.dart';
 import 'package:smart_city/core/errors/expentions.dart';
 import 'package:smart_city/core/helper/secure_storage_helper.dart';
 import 'package:smart_city/features/Auth/data/models/sign_in_model.dart';
